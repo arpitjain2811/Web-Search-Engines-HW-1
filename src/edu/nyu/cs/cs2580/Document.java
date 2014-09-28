@@ -14,7 +14,7 @@ class Document {
   private static HashMap < String , Integer > _dictionary = new HashMap < String , Integer >();
   private static Vector < String > _rdictionary = new Vector < String >();
   private static HashMap < Integer , Integer > _df = new HashMap < Integer , Integer >();
-  private static HashMap < Integer , Integer > _tf = new HashMap < Integer , Integer >();
+  private HashMap < Integer , Integer > _tf = new HashMap < Integer , Integer >();
   private static int _total_tf = 0;
   
   private Vector < Integer > _body;
@@ -27,7 +27,7 @@ class Document {
     return _dictionary.containsKey(s) ? _df.get(_dictionary.get(s)) : 0;
   }
 
-  public static int termFrequency(String s){
+  public int termFrequency(String s){
     return _dictionary.containsKey(s) ? _tf.get(_dictionary.get(s)) : 0;
   }
 
