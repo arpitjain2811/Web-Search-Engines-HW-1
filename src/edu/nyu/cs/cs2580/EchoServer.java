@@ -2,13 +2,18 @@ package edu.nyu.cs.cs2580;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
+import java.net.URI;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
 
 /**
  * Instructors' simple version.  As implemented now, this version does not
@@ -19,7 +24,7 @@ public class EchoServer {
 
   // @CS2580: please use a port number 258XX, where XX corresponds
   // to your group number.
-  private static int port = 25800;
+  private static int port = 25808;
 
   public static void main(String[] args) throws IOException {
     // Create the server.
@@ -38,18 +43,34 @@ public class EchoServer {
  * Instructors' simple version.
  */
 class EchoHandler implements HttpHandler {
-  private static String plainResponse =
-      "Request received, but I am not smart enough to echo yet!\n";
+  private String plainResponse ="Request received, but I am not smart enough to echo yet!\n";
   
+
   public void handle(HttpExchange exchange) throws IOException {
+	  
     String requestMethod = exchange.getRequestMethod();
-    if (!requestMethod.equalsIgnoreCase("GET")) {  // GET requests only.
-	System.out.println("I am a Dummy");
+	
+	URI reqURI=exchange.getRequestURI();
+    String rawQuery= reqURI.getQuery();
+    
+
+	
+	String keyword=rawQuery.substring(0,6);
+	String query=rawQuery.substring(6);	
+
+	plainResponse=query.replace('+',' ');
+	plainResponse=plainResponse+'\n';
+	
+
+    if (!requestMethod.equalsIgnoreCase("GET")) { 
+    	// GET requests only.	
       return;
     }
 
     // Print the user request header.
     Headers requestHeaders = exchange.getRequestHeaders();
+
+
     System.out.print("Incoming request: ");
     for (String key : requestHeaders.keySet()) {
       System.out.print(key + ":" + requestHeaders.get(key) + "; ");
