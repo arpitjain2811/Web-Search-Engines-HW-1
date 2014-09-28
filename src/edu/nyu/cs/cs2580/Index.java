@@ -19,6 +19,7 @@ class Index {
         int did = 0;
         while ((line = reader.readLine()) != null){
           Document d = new Document(did, line);
+          System.out.println(d.get_Doc_Freq("web"));
           _documents.add(d);
           did++;
         }
