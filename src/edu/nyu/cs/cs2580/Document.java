@@ -89,7 +89,7 @@ class Document {
 
 
   public int get_Doc_Freq(String s){
-    return (_dictionary.containsKey(s) & _doc_tf.containsKey(s))? _doc_tf.get(_dictionary.get(s)) : 0;
+    return (_dictionary.containsKey(s) & _doc_tf.containsKey(_dictionary.get(s)) ) ? _doc_tf.get(_dictionary.get(s)) : 0;
   }
 
   private Vector < String > getTermVector(Vector < Integer > tv){
