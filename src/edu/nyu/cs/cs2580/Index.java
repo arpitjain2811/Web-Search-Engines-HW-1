@@ -19,6 +19,7 @@ class Index {
         int did = 0;
         while ((line = reader.readLine()) != null){
           Document d = new Document(did, line);
+     
           _documents.add(d);
           did++;
         }
