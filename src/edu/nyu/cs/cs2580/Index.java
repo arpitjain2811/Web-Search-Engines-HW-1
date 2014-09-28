@@ -19,7 +19,7 @@ class Index {
         int did = 0;
         while ((line = reader.readLine()) != null){
           Document d = new Document(did, line);
-          System.out.println(d.termFrequency("web"));
+          System.out.println(d.get_Doc_Freq("web"));
           _documents.add(d);
           did++;
         }
@@ -35,9 +35,9 @@ class Index {
   public int documentFrequency(String s){
     return Document.documentFrequency(s);
   }
-//  public int termFrequency(String s){
-//    return Document.termFrequency(s);
-//  }
+  public int termFrequency(String s){
+    return Document.termFrequency(s);
+  }
   public int termFrequency(){
     return Document.termFrequency();
   }
