@@ -35,9 +35,9 @@ class Index {
   public int documentFrequency(String s){
     return Document.documentFrequency(s);
   }
-//  public int termFrequency(String s){
-//    return Document.termFrequency(s);
-//  }
+  public int termFrequency(String s){
+    return Document.termFrequency(s);
+  }
   public int termFrequency(){
     return Document.termFrequency();
   }
