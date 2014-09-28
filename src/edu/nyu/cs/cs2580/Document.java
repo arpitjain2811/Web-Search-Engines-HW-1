@@ -45,18 +45,22 @@ class Document {
     readTermVector(s.next(), _body);
     
     HashSet < Integer > unique_terms = new HashSet < Integer >();
+    int old_tf = 0;
     for (int i = 0; i < _title.size(); ++i){
       int idx = _title.get(i);
       unique_terms.add(idx);
-      int old_tf = _tf.get(idx);
+      //int old_tf = _tf.get(idx);
       _tf.put(idx, old_tf + 1);
+      old_tf = _tf.get(idx);
       _total_tf++;
     }
+    old_tf = 0;
     for (int i = 0; i < _body.size(); ++i){
       int idx = _body.get(i);
       unique_terms.add(idx);
-      int old_tf = _tf.get(idx);
+      //old_tf = _tf.get(idx);
       _tf.put(idx, old_tf + 1);
+      old_tf = _tf.get(idx);
       _total_tf++;
     }
     for (Integer idx : unique_terms){
