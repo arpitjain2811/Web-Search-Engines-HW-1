@@ -19,6 +19,7 @@ class Document {
   
   private Vector < Integer > _body;
   private Vector < Integer > _title;
+  private HashMap <Integer, Integer> _doc_tf;
   private String _titleString;
   private int _numviews;
   
@@ -40,6 +41,7 @@ class Document {
     _titleString = s.next();
     _title = new Vector < Integer >();
     _body = new Vector < Integer >();
+    _doc_tf = new HashMap < Integer, Integer >();
 
     readTermVector(_titleString, _title);
     readTermVector(s.next(), _body);
@@ -85,6 +87,11 @@ class Document {
     return getTermVector(_body);
   }
 
+
+  public int get_Doc_Freq(String s){
+    return _dictionary.containsKey(s) ? _doc_tf.get(_dictionary.get(s)) : 0;
+  }
+
   private Vector < String > getTermVector(Vector < Integer > tv){
     Vector < String > retval = new Vector < String >();
     for (int idx : tv){
@@ -106,6 +113,12 @@ class Document {
         _dictionary.put(term, idx);
         _tf.put(idx,0);
         _df.put(idx,0);
+      }
+      if (_doc_tf.containsKey(idx)) {
+        int old_doc_tf = _doc_tf.get(idx);
+        _doc_tf.put(idx,old_doc_tf + 1);
+      } else {
+        _doc_tf.put(idx, 1);
       }
       tv.add(idx);
     }
