@@ -88,7 +88,7 @@ class Document {
   }
 
 
-  public int get_Doc_Freq(String s){
+  public int get_Doc_Term_Freq(String s){
     return (_dictionary.containsKey(s) & _doc_tf.containsKey(_dictionary.get(s)) ) ? _doc_tf.get(_dictionary.get(s)) : 0;
   }
 
