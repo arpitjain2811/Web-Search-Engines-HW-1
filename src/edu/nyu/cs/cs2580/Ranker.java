@@ -1,6 +1,5 @@
 package edu.nyu.cs.cs2580;
 
-import java.util.Enumeration;
 import java.util.Vector;
 import java.util.Scanner;
 
@@ -46,6 +45,7 @@ class Ranker {
         }
       }
     }
+    s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
   }
   
@@ -69,27 +69,14 @@ class Ranker {
     }
 
     Document d = _index.getDoc(did);
-    Vector < String > dv = d.get_body_vector();
-    
 
-    // Score the document. Here we have provided a very simple ranking model,
-    // where a document is scored 1.0 if it gets hit by at least one query term.
-    
-    
-    
     double score = 0.0;
-    Integer idx=0;
     
-      for (int j = 0; j < qv.size(); ++j){
-
-          score += d.get_term_tfidf(qv.get(j));
-          
-      }
-      
-      
-      score=score*((double)1/Math.sqrt(qv.size()));
-    
-
+	for (int j = 0; j < qv.size(); ++j){
+		score += d.get_term_tfidf(qv.get(j));  
+	}
+	score=score*((double)1/Math.sqrt(qv.size()));
+	s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
   }
 	  
@@ -114,19 +101,11 @@ class Ranker {
       qv.add(term);
     }
 
-    // Get the document vector. For hw1, you don't have to worry about the
-    // details of how index works.
+
     Document d = _index.getDoc(did);
     Vector < String > dv = d.get_body_vector();
-    
 
-    // Score the document. Here we have provided a very simple ranking model,
-    // where a document is scored 1.0 if it gets hit by at least one query term.
-    
-    
-    
     double score = 0.0;
-    Integer idx=0;
     
     for (int i = 0; i < dv.size()-1; ++i){
         for (int j = 0; j < qv.size()-1; ++j){
@@ -136,19 +115,17 @@ class Ranker {
           }
         }
      }
-    
-     
-
+    s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
   }
 		  
   public Vector < ScoredDocument > runquery_numviews(String query){
 	  
-	    Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
-	    for (int i = 0; i < _index.numDocs(); ++i){
-	      retrieval_results.add(runquery_numviews(query, i));
-	    }
-	    return retrieval_results;
+    Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
+    for (int i = 0; i < _index.numDocs(); ++i){
+      retrieval_results.add(runquery_numviews(query, i));
+    }
+    return retrieval_results;
   }
 
   public ScoredDocument runquery_numviews(String query, int did){
@@ -161,16 +138,10 @@ class Ranker {
       qv.add(term);
     }
 
-    // Get the document vector. For hw1, you don't have to worry about the
-    // details of how index works.
     Document d = _index.getDoc(did);
-    Vector < String > dv = d.get_body_vector();
-    
 
-    // Score the document. Here we have provided a very simple ranking model,
-    // where a document is scored 1.0 if it gets hit by at least one query term.
-        
     double score = d.get_numviews();
+    s.close();
 
     return new ScoredDocument(did, d.get_title_string(), score);
   }	
@@ -180,7 +151,7 @@ class Ranker {
 	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
 	
 	Vector < ScoredDocument > cosine_results = new Vector < ScoredDocument > ();
-	Vector < ScoredDocument > lm_results = new Vector < ScoredDocument > ();
+	//Vector < ScoredDocument > lm_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > phrase_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > numviews_results = new Vector < ScoredDocument > ();
 	
@@ -197,15 +168,13 @@ class Ranker {
 	
     for (int i = 0; i < _index.numDocs(); ++i){
     	
-    score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score);
+    	score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score);
 
-    retrieval_results.add(new ScoredDocument(i, cosine_results.get(i)._title, score));
+    	retrieval_results.add(new ScoredDocument(i, cosine_results.get(i)._title, score));
 	    
     } 
-
+    
     return retrieval_results;
   }
-
-				  	  
-			  
+		  
 }
