@@ -12,14 +12,16 @@ class Document {
   public int _docid;
 
   private static HashMap < String , Integer > _dictionary = new HashMap < String , Integer >();
-  private static Vector < String > _rdictionary = new Vector < String >();
+  public static Vector < String > _rdictionary = new Vector < String >();
   private static HashMap < Integer , Integer > _df = new HashMap < Integer , Integer >();
   private static HashMap < Integer , Integer > _tf = new HashMap < Integer , Integer >();
   private static int _total_tf = 0;
   
+  
   private Vector < Integer > _body;
   private Vector < Integer > _title;
   private HashMap <Integer, Integer> _doc_tf;
+  public HashMap<Integer, Double> _doc_tfidf=new HashMap<Integer,Double>();
   private String _titleString;
   private int _numviews;
   
@@ -91,6 +93,39 @@ class Document {
   public int get_Doc_Term_Freq(String s){
     return (_dictionary.containsKey(s) & _doc_tf.containsKey(_dictionary.get(s)) ) ? _doc_tf.get(_dictionary.get(s)) : 0;
   }
+  
+  public void set_tfidf(int N)
+  {
+	  Double total=0.0;
+	  
+	 for(Integer key:_doc_tf.keySet())
+	 {
+		 Integer tf=_doc_tf.get(key);
+		 Integer df=_df.get(key);
+		 
+		 Double idf=(1 + Math.log((double) N/df)/Math.log(2));
+		
+		 
+		 
+		 
+		 _doc_tfidf.put(key, idf*tf);
+		 total+=idf*tf*tf*idf;
+		 
+		
+	 }
+
+	 for(Integer key:_doc_tf.keySet())
+	 {
+		 _doc_tfidf.put(key, _doc_tfidf.get(key)/Math.sqrt(total));
+		
+	 }
+	 
+	 
+	  
+	  
+	  
+  }
+  
 
   private Vector < String > getTermVector(Vector < Integer > tv){
     Vector < String > retval = new Vector < String >();
@@ -120,6 +155,10 @@ class Document {
       } else {
         _doc_tf.put(idx, 1);
       }
+      
+     //_doc_tfidf.put(idx,0.0);
+      
+      
       tv.add(idx);
     }
     return;
