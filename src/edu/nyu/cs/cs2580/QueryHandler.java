@@ -48,7 +48,9 @@ class QueryHandler implements HttpHandler {
     String queryResponse = "";  
     String uriQuery = exchange.getRequestURI().getQuery();
     String uriPath = exchange.getRequestURI().getPath();
-
+    Vector < ScoredDocument > sds = null;
+    
+    
     if ((uriPath != null) && (uriQuery != null)){
       if (uriPath.equals("/search")){
         Map<String,String> query_map = getQueryMap(uriQuery);
@@ -59,33 +61,41 @@ class QueryHandler implements HttpHandler {
             // @CS2580: Invoke different ranking functions inside your
             // implementation of the Ranker class.
             if (ranker_type.equals("cosine")){
-
-            	Vector < ScoredDocument > sds = _ranker.runquery_cosine(query_map.get("query"));
-                Iterator < ScoredDocument > itr = sds.iterator();
-                while (itr.hasNext()){
-                  ScoredDocument sd = itr.next();
-                  if (queryResponse.length() > 0){
-                    queryResponse = queryResponse + "\n";
-                  }
-                  queryResponse = queryResponse + query_map.get("query") + "\t" + sd.asString();
-                }
-                if (queryResponse.length() > 0){
-                  queryResponse = queryResponse + "\n";
-                }
+            	
+            	
+            	 sds = _ranker.runquery_cosine(query_map.get("query"));
 
             } else if (ranker_type.equals("QL")){
               queryResponse = (ranker_type + " not implemented.");
             } else if (ranker_type.equals("phrase")){
-              queryResponse = (ranker_type + " not implemented.");
-            } else if (ranker_type.equals("linear")){
-              queryResponse = (ranker_type + " not implemented.");
+            	
+            	
+            	sds = _ranker.runquery_phrase(query_map.get("query"));
+            	
+              
+            }
+            	else if (ranker_type.equals("numviews")){
+            	
+            	
+            	sds = _ranker.runquery_numviews(query_map.get("query"));
+            	
+              
+            }
+            
+            else if (ranker_type.equals("linear")){
+            	
+            	
+            	
+            	sds = _ranker.runquery_linear(query_map.get("query"));
+            	
+            	
             } else {
               queryResponse = (ranker_type+" not implemented.");
             }
           } else {
             // @CS2580: The following is instructor's simple ranker that does not
             // use the Ranker class.
-            Vector < ScoredDocument > sds = _ranker.runquery(query_map.get("query"));
+             sds = _ranker.runquery(query_map.get("query"));
             Iterator < ScoredDocument > itr = sds.iterator();
             while (itr.hasNext()){
               ScoredDocument sd = itr.next();
@@ -97,6 +107,18 @@ class QueryHandler implements HttpHandler {
             if (queryResponse.length() > 0){
               queryResponse = queryResponse + "\n";
             }
+          }
+          
+          Iterator < ScoredDocument > itr = sds.iterator();
+          while (itr.hasNext()){
+            ScoredDocument sd = itr.next();
+            if (queryResponse.length() > 0){
+              queryResponse = queryResponse + "\n";
+            }
+            queryResponse = queryResponse + query_map.get("query") + "\t" + sd.asString();
+          }
+          if (queryResponse.length() > 0){
+            queryResponse = queryResponse + "\n";
           }
         }
       }

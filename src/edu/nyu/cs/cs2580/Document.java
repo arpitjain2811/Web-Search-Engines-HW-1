@@ -99,6 +99,8 @@ class Document {
   }
   
   public Double get_term_tfidf(String s){
+	  
+	  
     return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
   }
 
