@@ -1,7 +1,7 @@
 package edu.nyu.cs.cs2580;
 
 // @CS2580: this class should not be changed.
-class ScoredDocument {
+class ScoredDocument implements Comparable<ScoredDocument> {
   public int _did;
   public String _title;
   public double _score;
@@ -16,4 +16,11 @@ class ScoredDocument {
     return new String(
       Integer.toString(_did) + "\t" + _title + "\t" + Double.toString(_score));
   }
+
+@Override
+public int compareTo(ScoredDocument o) {
+	
+	// TODO Auto-generated method stub
+	return Double.compare(o._score,this._score);
+}
 }

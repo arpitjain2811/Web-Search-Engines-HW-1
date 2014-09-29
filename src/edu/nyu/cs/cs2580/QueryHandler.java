@@ -2,10 +2,15 @@ package edu.nyu.cs.cs2580;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
@@ -102,6 +107,8 @@ class QueryHandler implements HttpHandler {
             }
           }
           
+          
+          Collections.sort(sds);
           Iterator < ScoredDocument > itr = sds.iterator();
           while (itr.hasNext()){
             ScoredDocument sd = itr.next();
