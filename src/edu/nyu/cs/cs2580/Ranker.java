@@ -151,7 +151,7 @@ class Ranker {
 	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
 	
 	Vector < ScoredDocument > cosine_results = new Vector < ScoredDocument > ();
-	Vector < ScoredDocument > lm_results = new Vector < ScoredDocument > ();
+	//Vector < ScoredDocument > lm_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > phrase_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > numviews_results = new Vector < ScoredDocument > ();
 	
