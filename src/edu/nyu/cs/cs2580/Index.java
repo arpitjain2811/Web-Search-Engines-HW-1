@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.Vector;
 
+
 class Index {
   public Vector < Document > _documents;
   public Index(String index_source){
@@ -22,6 +23,25 @@ class Index {
           _documents.add(d);
           did++;
         }
+        
+        for(int i=0;i<1;i++)
+        {
+        	Document d=_documents.get(i);
+        	
+        	d.set_tfidf(_documents.size());
+        	
+        	for(Integer key:d._doc_tfidf.keySet())
+        	{
+        		System.out.println(Document._rdictionary.get(key)+"\t"+d._doc_tfidf.get(key));
+        		
+        	}
+        	
+        	
+        }
+        
+        
+        
+        
       } finally {
         reader.close();
       }
