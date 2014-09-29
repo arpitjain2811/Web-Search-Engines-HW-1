@@ -80,9 +80,6 @@ class Ranker {
 	    Integer idx=0;
 	    
 	      for (int j = 0; j < qv.size(); ++j){
-	       
-	        	
-	          
 	        	
 	          score += d.get_term_tfidf(qv.get(j));
 	          
