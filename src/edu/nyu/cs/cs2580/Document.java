@@ -98,6 +98,10 @@ class Document {
     return (_dictionary.containsKey(s) & _doc_tf.containsKey(_dictionary.get(s)) ) ? _doc_tf.get(_dictionary.get(s)) : 0;
   }
   
+  public Double get_term_tfidf(String s){
+    return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
+  }
+
   public void set_tfidf(int N)
   {
 	  Double total=0.0;
