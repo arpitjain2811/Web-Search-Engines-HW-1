@@ -29,13 +29,11 @@ class Index {
         	Document d=_documents.get(i);
         	
         	d.set_tfidf(_documents.size());
-        	
-        	for(Integer key:d._doc_tfidf.keySet())
-        	{
-        		System.out.println(Document._rdictionary.get(key)+"\t"+d._doc_tfidf.get(key));
-        		
-        	}
-        	
+//        	for(Integer key:d._doc_tfidf.keySet())
+//        	{
+//        		System.out.println(Document._rdictionary.get(key)+"\t"+d._doc_tfidf.get(key));
+//        		
+//        	}
         	
         }
         
