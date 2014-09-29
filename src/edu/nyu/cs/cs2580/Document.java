@@ -98,32 +98,27 @@ class Document {
   {
 	  Double total=0.0;
 	  
+	 // Calculate tf*idf 
 	 for(Integer key:_doc_tf.keySet())
 	 {
 		 Integer tf=_doc_tf.get(key);
 		 Integer df=_df.get(key);
 		 
 		 Double idf=(1 + Math.log((double) N/df)/Math.log(2));
-		
-		 
-		 
-		 
+
 		 _doc_tfidf.put(key, idf*tf);
 		 total+=idf*tf*tf*idf;
 		 
 		
 	 }
-
+	 
+	 //Normalize
+	 
 	 for(Integer key:_doc_tf.keySet())
 	 {
-		 _doc_tfidf.put(key, _doc_tfidf.get(key)/Math.sqrt(total));
-		
+		 _doc_tfidf.put(key, _doc_tfidf.get(key)/Math.sqrt(total));		
 	 }
-	 
-	 
-	  
-	  
-	  
+
   }
   
 
