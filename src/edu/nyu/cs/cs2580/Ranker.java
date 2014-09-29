@@ -158,23 +158,23 @@ class Ranker {
 	cosine_results=runquery_cosine(query);
 	phrase_results=runquery_phrase(query);
 	//lm_results=runquery_lm(query);
-	numviews_results=runquery_numviews(query);
-    
+		numviews_results=runquery_numviews(query);
+	    
 	Double b_c=1.0;
 	Double b_p=1.0;
 	Double b_n=1.0; 
-	    
+		    
 	Double score=0.0;
+		
+	for (int i = 0; i < _index.numDocs(); ++i){
+	    	
+		score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score);
 	
-    for (int i = 0; i < _index.numDocs(); ++i){
-    	
-    	score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score);
-
-    	retrieval_results.add(new ScoredDocument(i, cosine_results.get(i)._title, score));
+		retrieval_results.add(new ScoredDocument(i, cosine_results.get(i)._title, score));
+		    
+	} 
 	    
-    } 
-    
-    return retrieval_results;
-  }
+	return retrieval_results;
+	  }
 		  
 }
