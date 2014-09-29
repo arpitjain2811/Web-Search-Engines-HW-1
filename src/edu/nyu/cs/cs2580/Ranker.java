@@ -84,8 +84,12 @@ class Ranker {
 	    Integer idx=0;
 	    
 	      for (int j = 0; j < qv.size(); ++j){
+<<<<<<< HEAD
 	       
 	    	  
+=======
+	        	
+>>>>>>> FETCH_HEAD
 	          score += d.get_term_tfidf(qv.get(j));
 	          
 	      }
