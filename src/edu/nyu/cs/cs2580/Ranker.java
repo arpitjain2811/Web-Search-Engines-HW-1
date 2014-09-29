@@ -107,6 +107,21 @@ class Ranker {
 
     double score = 0.0;
     
+    
+    if(qv.size()==1){
+    	
+    	for (int i = 0; i < dv.size(); ++i){
+            for (int j = 0; j < qv.size(); ++j){
+              if ( dv.get(i).equals(qv.get(j))){
+                score += 1.0;
+                break;
+              }
+            }
+         }
+    	
+    	
+    }
+    else{
     for (int i = 0; i < dv.size()-1; ++i){
         for (int j = 0; j < qv.size()-1; ++j){
           if ( (dv.get(i).equals(qv.get(j)) && (dv.get(i+1).equals(qv.get(j+1))) )){
@@ -115,6 +130,7 @@ class Ranker {
           }
         }
      }
+    }
     s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
   }
