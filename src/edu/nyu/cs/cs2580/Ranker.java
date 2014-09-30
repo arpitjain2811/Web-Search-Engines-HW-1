@@ -167,18 +167,18 @@ class Ranker {
 	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
 	
 	Vector < ScoredDocument > cosine_results = new Vector < ScoredDocument > ();
-	//Vector < ScoredDocument > lm_results = new Vector < ScoredDocument > ();
+	//Vector < ScoredDocument > ql_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > phrase_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > numviews_results = new Vector < ScoredDocument > ();
 	
 	cosine_results=runquery_cosine(query);
 	phrase_results=runquery_phrase(query);
-	//lm_results=runquery_lm(query);
+	//ql_results=runquery_lm(query);
 	numviews_results=runquery_numviews(query);
 	    
-	Double b_c=1.0;
-	Double b_p=1.0;
-	Double b_n=1.0; 
+	Double b_c=0.9;
+	Double b_p=0.005;
+	Double b_n=1.0/19873.0; 
 		    
 	Double score=0.0;
 		
