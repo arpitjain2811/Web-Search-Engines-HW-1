@@ -63,6 +63,13 @@ class QueryHandler implements HttpHandler {
         if (keys.contains("query")){
           if (keys.contains("ranker")){
             String ranker_type = query_map.get("ranker");
+            String query=query_map.get("query");
+            query=query.replace('+', ' ');
+            query_map.put("query", query);
+            
+            System.out.println(query);
+            System.out.println(query_map.get("query"));
+            
             // @CS2580: Invoke different ranking functions inside your
             // implementation of the Ranker class.
             if (ranker_type.equals("cosine")){
