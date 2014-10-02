@@ -109,27 +109,19 @@ class Ranker {
     
     
     if(qv.size()==1){
-    	
-    	for (int i = 0; i < dv.size(); ++i){
-            for (int j = 0; j < qv.size(); ++j){
-              if ( dv.get(i).equals(qv.get(j))){
-                score += 1.0;
-                break;
-              }
-            }
-         }
-    	
-    	
+
+	score = d.get_Doc_Term_Freq(qv.get(0));
+	score = score / dv.size()
     }
     else{
-    for (int i = 0; i < dv.size()-1; ++i){
-        for (int j = 0; j < qv.size()-1; ++j){
-          if ( (dv.get(i).equals(qv.get(j)) && (dv.get(i+1).equals(qv.get(j+1))) )){
-            score += 1.0;
-            break;
-          }
-        }
-     }
+	for (int i = 0; i < dv.size()-1; ++i){
+	    for (int j = 0; j < qv.size()-1; ++j){
+		if ( (dv.get(i).equals(qv.get(j)) && (dv.get(i+1).equals(qv.get(j+1))) )){
+		    score += 1.0;
+		}
+	    }
+	}
+	score = score / ((qv.size() - 1) * (dv.size() - 1))
     }
     s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
