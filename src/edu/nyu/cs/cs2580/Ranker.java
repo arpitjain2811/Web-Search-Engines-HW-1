@@ -173,7 +173,7 @@ public Vector < ScoredDocument > runquery_linear(String query){
 	
 	cosine_results=runquery_cosine(query);
 	phrase_results=runquery_phrase(query);
-	ql_results=runquery_lm(query);
+	ql_results=runquery_QL(query);
 	numviews_results=runquery_numviews(query);
 	    
 	Double b_c=0.9;
