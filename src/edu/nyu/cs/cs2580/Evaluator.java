@@ -12,6 +12,7 @@ import java.util.Scanner;
 class Evaluator {
 
   public static void main(String[] args) throws IOException {
+	  
     HashMap < String , HashMap < Integer , Double > > relevance_judgments =
       new HashMap < String , HashMap < Integer , Double > >();
     if (args.length < 1){
@@ -68,7 +69,7 @@ class Evaluator {
       String line = null;
       double RR = 0.0;
       double N = 0.0;
-      while ((line = reader.readLine()) != null){
+      while (((line = reader.readLine()) != null) && N<1){
         Scanner s = new Scanner(line).useDelimiter("\t");
         String query = s.next();
         int did = Integer.parseInt(s.next());
@@ -79,7 +80,7 @@ class Evaluator {
       	}
       	HashMap < Integer , Double > qr = relevance_judgments.get(query);
       	if (qr.containsKey(did) != false){
-      	  RR += qr.get(did);					
+      	  RR += qr.get(did); 
       	}
       	++N;
       }
