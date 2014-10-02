@@ -156,7 +156,7 @@ class Ranker {
 
     Document d = _index.getDoc(did);
 
-    double score = d.get_numviews();
+    double score = (1.0 / 19873.0) * d.get_numviews();
     s.close();
 
     return new ScoredDocument(did, d.get_title_string(), score);
@@ -167,19 +167,19 @@ public Vector < ScoredDocument > runquery_linear(String query){
 	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
 	
 	Vector < ScoredDocument > cosine_results = new Vector < ScoredDocument > ();
-	//Vector < ScoredDocument > ql_results = new Vector < ScoredDocument > ();
+	Vector < ScoredDocument > ql_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > phrase_results = new Vector < ScoredDocument > ();
 	Vector < ScoredDocument > numviews_results = new Vector < ScoredDocument > ();
 	
 	cosine_results=runquery_cosine(query);
 	phrase_results=runquery_phrase(query);
-	//ql_results=runquery_lm(query);
+	ql_results=runquery_lm(query);
 	numviews_results=runquery_numviews(query);
 	    
 	Double b_c=0.9;
 	Double b_p=0.005;
-	Double b_n=1.0/19873.0; 
-		    
+	Double b_n=1.;
+	Double b_ql=1.;    
 	Double score=0.0;
 		
 	for (int i = 0; i < _index.numDocs(); ++i){
