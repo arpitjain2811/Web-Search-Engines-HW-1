@@ -176,15 +176,16 @@ public Vector < ScoredDocument > runquery_linear(String query){
 	ql_results=runquery_QL(query);
 	numviews_results=runquery_numviews(query);
 	    
-	Double b_c=0.9;
-	Double b_p=0.005;
-	Double b_n=1.;
-	Double b_ql=1.;    
+	Double b_c=0.25;
+	Double b_p=0.25;
+	Double b_n=0.25;
+	Double b_ql=0.25;
+    
 	Double score=0.0;
 		
 	for (int i = 0; i < _index.numDocs(); ++i){
 	    
-	    score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score);
+	    score = b_c*(cosine_results.get(i)._score)+b_p*(phrase_results.get(i)._score)+b_n*(numviews_results.get(i)._score)+b_ql*(ql_results.get(i)._score);
 	    
 	    retrieval_results.add(new ScoredDocument(i, cosine_results.get(i)._title, score));
 	    
