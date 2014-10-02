@@ -27,7 +27,7 @@ class Index {
         for(int i=0;i<_documents.size();i++)
         {
         	Document d=_documents.get(i);   	
-        	d.set_tfidf(_documents.size());	
+        	d.set_doc_representations(_documents.size());	
         }
         
 

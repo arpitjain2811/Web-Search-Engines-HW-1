@@ -21,7 +21,9 @@ class Document {
   private Vector < Integer > _body;
   private Vector < Integer > _title;
   private HashMap <Integer, Integer> _doc_tf;
-  public HashMap<Integer, Double> _doc_tfidf=new HashMap<Integer,Double>();
+  public HashMap <Integer, Double> _doc_tfidf = new HashMap<Integer,Double>();
+  private HashMap <Integer, Double> _doc_lm_prob = new HashMap<Integer,Double>();
+    private double _lambda = 0.8;
   private String _titleString;
   private int _numviews;
   
@@ -94,44 +96,45 @@ class Document {
     return getTermVector(_body);
   }
 
-
   public int get_Doc_Term_Freq(String s){
     return (_dictionary.containsKey(s) & _doc_tf.containsKey(_dictionary.get(s)) ) ? _doc_tf.get(_dictionary.get(s)) : 0;
   }
   
-  public Double get_term_tfidf(String s){
-	  
-	  
+  public double get_term_tfidf(String s){
     return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
   }
 
-  public void set_tfidf(int N)
-  {
-	  Double total=0.0;
-	  
-	 // Calculate tf*idf 
-	 for(Integer key:_doc_tf.keySet())
-	 {
-		 Integer tf=_doc_tf.get(key);
-		 Integer df=_df.get(key);
-		 
-		 Double idf=(1 + Math.log((double) N/df)/Math.log(2));
-
-		 _doc_tfidf.put(key, idf*tf);
-		 total+=idf*tf*tf*idf;
-		 
-		
-	 }
-	 
-	 //Normalize
-	 
-	 for(Integer key:_doc_tf.keySet())
-	 {
-		 _doc_tfidf.put(key, _doc_tfidf.get(key)/Math.sqrt(total));		
-	 }
-
+  public double get_term_lm_prob(String s){	  
+    return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
   }
-  
+
+  public void set_doc_representations(int N) {
+      double total = 0.0;
+      
+      // Calculate tf*idf 
+      for( Integer key : _doc_tf.keySet() )
+	  {
+	      int tf = _doc_tf.get( key );
+	      int df = _df.get( key );
+	      
+	      double idf = ( 1 + Math.log( (double) N/df ) / Math.log(2) );
+	      _doc_tfidf.put( key, idf * tf );
+	      total += idf*idf * tf*tf;
+
+	      double doc_prob = (double) tf / _body.size(); 
+	      double lang_prob = (double) df / _tf.get( key );
+	      _doc_lm_prob.put(key, _lambda * doc_prob + (1.0 - _lambda) * lang_prob);
+	  }
+      
+      //Normalize
+      for( Integer key : _doc_tf.keySet() )
+	  {
+	      _doc_tfidf.put( key, _doc_tfidf.get( key ) / Math.sqrt(total) );		
+	  }
+  }
+
+
+    
 
   private Vector < String > getTermVector(Vector < Integer > tv){
     Vector < String > retval = new Vector < String >();
