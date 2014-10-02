@@ -111,7 +111,7 @@ class Ranker {
     if(qv.size()==1){
 
 	score = d.get_Doc_Term_Freq(qv.get(0));
-	score = score / dv.size()
+	score = score / dv.size();
     }
     else{
 	for (int i = 0; i < dv.size()-1; ++i){
@@ -121,7 +121,7 @@ class Ranker {
 		}
 	    }
 	}
-	score = score / ((qv.size() - 1) * (dv.size() - 1))
+	score = score / ((qv.size() - 1) * (dv.size() - 1));
     }
     s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
