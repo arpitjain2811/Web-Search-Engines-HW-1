@@ -46,7 +46,7 @@ class Document {
     _doc_tf = new HashMap < Integer, Integer >();
 
     readTermVector(_titleString, _title);
-    _doc_tf.clear()
+    _doc_tf.clear();
     readTermVector(s.next(), _body);
     
     HashSet < Integer > unique_terms = new HashSet < Integer >();
