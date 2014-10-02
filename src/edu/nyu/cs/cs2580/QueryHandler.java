@@ -55,13 +55,13 @@ class QueryHandler implements HttpHandler {
     String uriQuery = exchange.getRequestURI().getQuery();
     String uriPath = exchange.getRequestURI().getPath();
     Vector < ScoredDocument > sds = null;
-    
+    String responseheadertype=null;
     
     if ((uriPath != null) && (uriQuery != null)){
       if (uriPath.equals("/search")){
         Map<String,String> query_map = getQueryMap(uriQuery);
         Set<String> keys = query_map.keySet();
-        String responseheadertype="text/plain";
+        responseheadertype="text/plain";
         String type=null;
         if(keys.contains("format"))
         {
@@ -166,7 +166,7 @@ class QueryHandler implements HttpHandler {
     
       // Construct a simple response.
       Headers responseHeaders = exchange.getResponseHeaders();
-      responseHeaders.set("Content-Type", "text/plain");
+      responseHeaders.set("Content-Type", responseheadertype);
       exchange.sendResponseHeaders(200, 0);  // arbitrary number of bytes
       OutputStream responseBody = exchange.getResponseBody();
       responseBody.write(queryResponse.getBytes());

@@ -23,7 +23,7 @@ class Document {
   private HashMap <Integer, Integer> _doc_tf;
   public HashMap <Integer, Double> _doc_tfidf = new HashMap<Integer,Double>();
   private HashMap <Integer, Double> _doc_lm_prob = new HashMap<Integer,Double>();
-    private double _lambda = 0.8;
+  private double _lambda = 0.8;
   private String _titleString;
   private int _numviews;
   
