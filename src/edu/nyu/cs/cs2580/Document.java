@@ -111,7 +111,7 @@ class Document {
 	      return _doc_lm_prob.get(_dictionary.get(s))
 	  }
 	  else {
-	      return (1.0 - _lambda) * (double) _df.get( key ) / _tf.get( key );
+	      return (1.0 - _lambda) * (double) termFrequency(s) / _total_tf;
 	  }
       }
     return 0.0
@@ -131,7 +131,7 @@ class Document {
 	      total += idf*idf * tf*tf;
 
 	      double doc_prob = (double) tf / _body.size(); 
-	      double lang_prob = (double) df / _tf.get( key );
+	      double lang_prob = (double) _tf(key) / _total_tf;
 	      _doc_lm_prob.put(key, _lambda * doc_prob + (1.0 - _lambda) * lang_prob);
 	  }
       

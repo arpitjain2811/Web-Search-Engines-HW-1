@@ -154,6 +154,39 @@ class Ranker {
     return new ScoredDocument(did, d.get_title_string(), score);
   }	
 			  
+
+  public ScoredDocument runquery_QL(String query, int did){
+
+    // Build query vector
+    Scanner s = new Scanner(query);
+    Vector < String > qv = new Vector < String > ();
+    while (s.hasNext()){
+      String term = s.next();
+      qv.add(term);
+    }
+
+    Document d = _index.getDoc(did);
+    Double score = 1.0;
+
+    for (int j = 0; j < qv.size(); ++j){
+	score *= d.get_term_lm_prob( qv.get(j) );
+    }
+
+    s.close();
+
+    return new ScoredDocument(did, d.get_title_string(), score);
+  }	
+
+  public Vector < ScoredDocument > runquery_QL(String query){
+	  
+    Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
+    for (int i = 0; i < _index.numDocs(); ++i){
+      retrieval_results.add(runquery_QL(query, i));
+    }
+    return retrieval_results;  
+  }
+
+
 public Vector < ScoredDocument > runquery_linear(String query){
 	  
 	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
@@ -185,45 +218,6 @@ public Vector < ScoredDocument > runquery_linear(String query){
 	
 	return retrieval_results;
 }
-
-
-  public ScoredDocument runquery_QL(String query, int did){
-
-    // Build query vector
-    Scanner s = new Scanner(query);
-    Vector < String > qv = new Vector < String > ();
-    while (s.hasNext()){
-      String term = s.next();
-      qv.add(term);
-    }
-
-    Document d = _index.getDoc(did);
-    Integer Total_Doc = qv.size() + d.get_title_vector().size() + d.get_body_vector().size();
-    Integer Total_Corpus = qv.size() + d.termFrequency();
-    Double score = 1.0;
-    Double alpha = 0.8;
-
-    for (int j = 0; j < qv.size(); ++j){
-	Integer dtf = d.get_Doc_Term_Freq(qv.get(j));
-	Integer tf = d.termFrequency(qv.get(j));
-
-	score *= (alpha * (1 + dtf)) / Total_Doc  +  ((1 - alpha) * (1 + tf)) / Total_Corpus;  
-    }
-
-    s.close();
-
-    return new ScoredDocument(did, d.get_title_string(), score);
-  }	
-
-  public Vector < ScoredDocument > runquery_QL(String query){
-	  
-    Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
-    for (int i = 0; i < _index.numDocs(); ++i){
-      retrieval_results.add(runquery_QL(query, i));
-    }
-    return retrieval_results;  
-  }
-
 
     
 }
