@@ -54,7 +54,7 @@ do
 	    echo "Creating file... "$FILE
 	    touch $FILE
 	fi
-	curl " http://linserv1.nyu.edu:25808/search?query=$QUERY&ranker=$RANKER&format=text" | java edu.nyu.cs.cs2580.Evaluator $JUDGEMENTS >> $FILE
+	curl " http://linserv1.nyu.edu:25808/search?query="$QUERY"&ranker="$RANKER"&format=text" | java edu.nyu.cs.cs2580.Evaluator $JUDGEMENTS >> $FILE
 
     done
 done
