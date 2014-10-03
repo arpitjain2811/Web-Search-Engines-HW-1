@@ -1,14 +1,36 @@
 package edu.nyu.cs.cs2580;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Vector;
 import java.util.Scanner;
 
 class Ranker {
   private Index _index;
-  
+  Properties prop;
+  FileInputStream input;
+  double b_c;
+  double b_p;
+  double b_n;
+  double b_ql;
+    
 
-  public Ranker(String index_source){
+
+  public Ranker(String index_source) throws IOException {
     _index = new Index(index_source);
+
+    prop = new Properties();
+    input = new FileInputStream("config.properties");
+    prop.load(input);
+    
+    b_c = Double.parseDouble( prop.getProperty("beta_cosine") );
+    b_p = Double.parseDouble( prop.getProperty("beta_phrase") );
+    b_n = Double.parseDouble( prop.getProperty("beta_numviews") );
+    b_ql = Double.parseDouble( prop.getProperty("beta_querylike") );
+    
+    input.close();
+    
   }
 
   public Vector < ScoredDocument > runquery(String query){
@@ -201,11 +223,6 @@ public Vector < ScoredDocument > runquery_linear(String query){
 	ql_results=runquery_QL(query);
 	numviews_results=runquery_numviews(query);
 	    
-	Double b_c=0.25;
-	Double b_p=0.25;
-	Double b_n=0.25;
-	Double b_ql=0.25;
-    
 	Double score=0.0;
 		
 	for (int i = 0; i < _index.numDocs(); ++i){
