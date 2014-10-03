@@ -12,7 +12,7 @@ import java.util.Scanner;
 class Evaluator {
 
   public static void main(String[] args) throws IOException {
-	  
+	 
     HashMap < String , HashMap < Integer , Double > > relevance_judgments =
       new HashMap < String , HashMap < Integer , Double > >();
     if (args.length < 1){
@@ -24,6 +24,7 @@ class Evaluator {
     readRelevanceJudgments(p,relevance_judgments);
     // now evaluate the results from stdin
     evaluateStdin(relevance_judgments);
+    
   }
 
   public static void readRelevanceJudgments(
@@ -61,17 +62,20 @@ class Evaluator {
   }
 
   public static void evaluateStdin(
-    HashMap < String , HashMap < Integer , Double > > relevance_judgments){
-    // only consider one query per call    
+    HashMap < String , HashMap < Integer , Double > > relevance_judgments)
+  {
+    // only consider one query per call
+	  HashMap < Double , Double > num_rel_at =new HashMap < Double , Double >();
+	  String query=null;
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
       
       String line = null;
       double RR = 0.0;
       double N = 0.0;
-      while (((line = reader.readLine()) != null) && N<1){
+      while (((line = reader.readLine()) != null)){
         Scanner s = new Scanner(line).useDelimiter("\t");
-        String query = s.next();
+        query = s.next();
         int did = Integer.parseInt(s.next());
       	String title = s.next();
       	double rel = Double.parseDouble(s.next());
@@ -82,8 +86,39 @@ class Evaluator {
       	if (qr.containsKey(did) != false){
       	  RR += qr.get(did); 
       	}
+      	
+      	num_rel_at.put(N, RR);
       	++N;
       }
+      
+      Double P_1,P_5,P_10,R_1,R_5,R_10;
+      
+      System.out.println("Evaluations");
+      System.out.println("Precision");
+      
+      
+      System.out.println(Double.toString(num_rel_at.get(1.0)/1.0)+"\t"+Double.toString(num_rel_at.get(5.0)/5.0)+"\t"+Double.toString(num_rel_at.get(10.0)/10.0));
+
+      
+      HashMap < Integer , Double > qr = relevance_judgments.get(query);
+      
+      Double total_rel=0.0;
+      
+      for(Integer i:qr.keySet())
+      {
+    	  if(qr.get(i)==1.0)
+    	  {
+    		  total_rel++;
+    	  }
+    	  
+      }
+      
+      System.out.println("Recall");
+      System.out.println(Double.toString(num_rel_at.get(1.0)/total_rel)+"\t"+Double.toString(num_rel_at.get(5.0)/total_rel)+"\t"+Double.toString(num_rel_at.get(10.0)/total_rel));
+
+      
+      
+      
       System.out.println(Double.toString(RR/N));
     } catch (Exception e){
       System.err.println("Error:" + e.getMessage());
