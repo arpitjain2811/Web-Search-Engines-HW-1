@@ -1,8 +1,5 @@
 package edu.nyu.cs.cs2580;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -42,7 +39,7 @@ class Document {
     return _total_tf;
   }
   
-  public Document(int did, String content) throws IOException {
+  public Document(int did, String content){
     Scanner s = new Scanner(content).useDelimiter("\t");
 
     _titleString = s.next();

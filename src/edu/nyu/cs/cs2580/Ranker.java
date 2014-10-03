@@ -68,39 +68,40 @@ class Ranker {
     s.close();
     return new ScoredDocument(did, d.get_title_string(), score);
   }
-  
-  public Vector < ScoredDocument > runquery_cosine(String query){
-	  
-    Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
-    for (int i = 0; i < _index.numDocs(); ++i){
-      retrieval_results.add(runquery_cosine(query, i));
+    
+    public Vector < ScoredDocument > runquery_cosine(String query){
+	
+	Vector < ScoredDocument > retrieval_results = new Vector < ScoredDocument > ();
+	for (int i = 0; i < _index.numDocs(); ++i){
+	    retrieval_results.add(runquery_cosine(query, i));
+	}
+
+	return retrieval_results;  
     }
-    return retrieval_results;  
-  }
-
+    
   public ScoredDocument runquery_cosine(String query, int did){
-
-    // Build query vector
-    Scanner s = new Scanner(query);
-    Vector < String > qv = new Vector < String > ();
-    while (s.hasNext()){
+      
+      // Build query vector
+      Scanner s = new Scanner(query);
+      Vector < String > qv = new Vector < String > ();
+      while (s.hasNext()){
       String term = s.next();
       qv.add(term);
-    }
-
-    Document d = _index.getDoc(did);
-
-    double score = 0.0;
-    
-	for (int j = 0; j < qv.size(); ++j){
-		score += d.get_term_tfidf(qv.get(j));  
-	}
-	score=score*((double)1/Math.sqrt(qv.size()));
-	s.close();
-    return new ScoredDocument(did, d.get_title_string(), score);
+      }
+      
+      Document d = _index.getDoc(did);
+      
+      double score = 0.0;
+      
+      for (int j = 0; j < qv.size(); ++j){
+	  score += d.get_term_tfidf(qv.get(j));  
+      }
+      score=score*((double)1/Math.sqrt(qv.size()));
+      s.close();
+      return new ScoredDocument(did, d.get_title_string(), score);
   }
-	  
-	  
+    
+    
   
   public Vector < ScoredDocument > runquery_phrase(String query){
 	  
