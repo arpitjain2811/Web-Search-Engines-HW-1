@@ -108,13 +108,13 @@ class Document {
       
       if ( _dictionary.containsKey(s) ){
 	  if (  _doc_lm_prob.containsKey(_dictionary.get(s)) ){
-	      return _doc_lm_prob.get(_dictionary.get(s))
+	      return _doc_lm_prob.get(_dictionary.get(s));
 	  }
 	  else {
 	      return (1.0 - _lambda) * (double) termFrequency(s) / _total_tf;
 	  }
       }
-    return 0.0
+      return 0.0;
   }
 
   public void set_doc_representations(int N) {
@@ -131,7 +131,7 @@ class Document {
 	      total += idf*idf * tf*tf;
 
 	      double doc_prob = (double) tf / _body.size(); 
-	      double lang_prob = (double) _tf(key) / _total_tf;
+	      double lang_prob = (double) _tf.get(key) / _total_tf;
 	      _doc_lm_prob.put(key, _lambda * doc_prob + (1.0 - _lambda) * lang_prob);
 	  }
       
