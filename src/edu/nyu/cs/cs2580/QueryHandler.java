@@ -132,12 +132,12 @@ class QueryHandler implements HttpHandler {
           
           
           Collections.sort(sds);
-	  ScoredDocument maxDoc = Collections.min(sds);
-	  double max_val = 1.0; //maxDoc._score;
-	  System.out.println(max_val);
-	  for (int i = 0; i < sds.size(); ++i){
-	      sds.get(i)._score /= max_val; 
-	  }
+//	  ScoredDocument maxDoc = Collections.min(sds);
+//	  double max_val = 1.0; //maxDoc._score;
+//	  System.out.println(max_val);
+//	  for (int i = 0; i < sds.size(); ++i){
+//	      sds.get(i)._score /= max_val; 
+//	  }
           Iterator < ScoredDocument > itr = sds.iterator();
           
           if(type.equals("text"))

@@ -1,15 +1,13 @@
 package edu.nyu.cs.cs2580;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.Scanner;
 
 class Ranker {
   private Index _index;
-  private Properties prop;
-  private FileInputStream input;
   private double b_c;
   private double b_p;
   private double b_n;
@@ -17,17 +15,24 @@ class Ranker {
     
   public Ranker(String index_source) throws IOException {
     _index = new Index(index_source);
-
-    prop = new Properties();
-    input = new FileInputStream("/home/maw627/WebSearch/Web-Search-Engines-HW-1/src/edu/nyu/cs/cs2580/config.properties");
-    prop.load(input);
+    
+    Properties prop=new Properties();
+    String propfile="/edu/nyu/cs/cs2580/"+"config.properties";
+   
+   
+    prop.load(Ranker.class.getResourceAsStream(propfile));
     
     b_c = Double.parseDouble( prop.getProperty("beta_cosine") );
     b_p = Double.parseDouble( prop.getProperty("beta_phrase") );
     b_n = Double.parseDouble( prop.getProperty("beta_numviews") );
     b_ql = Double.parseDouble( prop.getProperty("beta_querylike") );
     
-    input.close();
+//    b_c = 0.4;
+//	  b_p = 0.3;
+//	  b_ql =0.35;
+//	  b_n = 1-b_c-b_p-b_ql;
+    
+    
     
   }
 
@@ -75,6 +80,13 @@ class Ranker {
 	for (int i = 0; i < _index.numDocs(); ++i){
 	    retrieval_results.add(runquery_cosine(query, i));
 	}
+	
+	ScoredDocument maxDoc = Collections.min(retrieval_results);
+	double max_val = maxDoc._score;
+	
+	for (int i = 0; i < retrieval_results.size(); ++i){
+	    retrieval_results.get(i)._score /= max_val; 
+	}
 
 	return retrieval_results;  
     }
@@ -109,6 +121,12 @@ class Ranker {
     for (int i = 0; i < _index.numDocs(); ++i){
       retrieval_results.add(runquery_phrase(query, i));
     }
+    ScoredDocument maxDoc = Collections.min(retrieval_results);
+	double max_val = maxDoc._score;
+	
+	for (int i = 0; i < retrieval_results.size(); ++i){
+	    retrieval_results.get(i)._score /= max_val; 
+	}
     return retrieval_results;
   }
 
@@ -154,6 +172,12 @@ class Ranker {
     for (int i = 0; i < _index.numDocs(); ++i){
       retrieval_results.add(runquery_numviews(query, i));
     }
+    ScoredDocument maxDoc = Collections.min(retrieval_results);
+	double max_val = maxDoc._score;
+	
+	for (int i = 0; i < retrieval_results.size(); ++i){
+	    retrieval_results.get(i)._score /= max_val; 
+	}
     return retrieval_results;
   }
 
@@ -204,6 +228,12 @@ class Ranker {
     for (int i = 0; i < _index.numDocs(); ++i){
       retrieval_results.add(runquery_QL(query, i));
     }
+    ScoredDocument maxDoc = Collections.min(retrieval_results);
+	double max_val = maxDoc._score;
+	
+	for (int i = 0; i < retrieval_results.size(); ++i){
+	    retrieval_results.get(i)._score /= max_val; 
+	}
     return retrieval_results;  
   }
 
