@@ -104,8 +104,17 @@ class Document {
     return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
   }
 
-  public double get_term_lm_prob(String s){	  
-    return (_dictionary.containsKey(s) & _doc_tfidf.containsKey(_dictionary.get(s)) ) ? _doc_tfidf.get(_dictionary.get(s)) : 0.0;
+  public double get_term_lm_prob(String s){
+      
+      if ( _dictionary.containsKey(s) ){
+	  if (  _doc_lm_prob.containsKey(_dictionary.get(s)) ){
+	      return _doc_lm_prob.get(_dictionary.get(s))
+	  }
+	  else {
+	      return (1.0 - _lambda) * (double) _df.get( key ) / _tf.get( key );
+	  }
+      }
+    return 0.0
   }
 
   public void set_doc_representations(int N) {
