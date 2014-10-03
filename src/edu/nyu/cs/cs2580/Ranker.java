@@ -8,20 +8,18 @@ import java.util.Scanner;
 
 class Ranker {
   private Index _index;
-  Properties prop;
-  FileInputStream input;
-  double b_c;
-  double b_p;
-  double b_n;
-  double b_ql;
+  private Properties prop;
+  private FileInputStream input;
+  private double b_c;
+  private double b_p;
+  private double b_n;
+  private double b_ql;
     
-
-
   public Ranker(String index_source) throws IOException {
     _index = new Index(index_source);
 
     prop = new Properties();
-    input = new FileInputStream("config.properties");
+    input = new FileInputStream("/home/maw627/WebSearch/Web-Search-Engines-HW-1/src/edu/nyu/cs/cs2580/config.properties");
     prop.load(input);
     
     b_c = Double.parseDouble( prop.getProperty("beta_cosine") );

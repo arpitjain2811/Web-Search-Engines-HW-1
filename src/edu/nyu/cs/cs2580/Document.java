@@ -1,5 +1,8 @@
 package edu.nyu.cs.cs2580;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -23,9 +26,9 @@ class Document {
   private HashMap <Integer, Integer> _doc_tf;
   public HashMap <Integer, Double> _doc_tfidf = new HashMap<Integer,Double>();
   private HashMap <Integer, Double> _doc_lm_prob = new HashMap<Integer,Double>();
-  private double _lambda = 0.8;
   private String _titleString;
   private int _numviews;
+  private double _lambda = 0.5;
   
   public static int documentFrequency(String s){
     return _dictionary.containsKey(s) ? _df.get(_dictionary.get(s)) : 0;
@@ -39,7 +42,7 @@ class Document {
     return _total_tf;
   }
   
-  public Document(int did, String content){
+  public Document(int did, String content) throws IOException {
     Scanner s = new Scanner(content).useDelimiter("\t");
 
     _titleString = s.next();
