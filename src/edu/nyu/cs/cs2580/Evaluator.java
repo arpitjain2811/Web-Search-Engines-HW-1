@@ -1,11 +1,9 @@
 package edu.nyu.cs.cs2580;
 
 import java.io.IOException;
-import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
@@ -122,7 +120,7 @@ public static void evaluateStdin(
       double AP= 0.0;
       double N = 1.0;
       double DCG=0.0;
-      Double RecRank=null;
+      Double RecRank=0.0;
       Double total_rel=0.0;
       Boolean onlyonce=true;
       
@@ -161,7 +159,7 @@ public static void evaluateStdin(
       	  if(qr.get(did)==1.0)
       	  {
       		  
-      		  if(RecRank==null)
+      		  if(RecRank==0.0)
       		  {
       			  RecRank=1/N;
       		  }
@@ -244,10 +242,11 @@ public static void evaluateStdin(
     	  ideal.add(qg.get(i));   	  
       }	
       
+      
       Comparator<Double> comparator = Collections.reverseOrder();
       Collections.sort(ideal,comparator);
       
-
+      
       double dcg=0.0;
       Vector<Double> IDCG=new Vector<Double>(ideal.size());
       
@@ -255,13 +254,16 @@ public static void evaluateStdin(
       {
     	  
     	  dcg += ideal.get(i)/(Math.log(i+1+1)/Math.log(2));
+    	  
     	  IDCG.add(dcg);
   
       }
+     
       
       IDCG_1=IDCG.get(0);
       
-      if(IDCG.get(4) != null)
+      
+      if(4<IDCG.size())
       {
     	  IDCG_5=IDCG.get(4);
       }
@@ -270,7 +272,7 @@ public static void evaluateStdin(
     	  IDCG_5=IDCG.lastElement();
       }
       
-      if(IDCG.get(9) != null)
+      if(9<IDCG.size())
       {
     	  IDCG_10=IDCG.get(9);
       }
@@ -281,8 +283,27 @@ public static void evaluateStdin(
       
 
       DCG_1= NDCG.get(1.0);
-      DCG_5=NDCG.get(5.0);
-      DCG_10=NDCG.get(10.0);
+      
+      
+      if(NDCG.get(5.0) != null)
+      {
+    	  DCG_5=NDCG.get(5.0);
+      }
+      else
+      {
+    	  DCG_5=NDCG.get(N-1);
+      }
+      
+      if(NDCG.get(10.0) != null)
+      {
+    	  DCG_10=NDCG.get(10.0);
+      }
+      else
+      {
+    	  DCG_10=NDCG.get(N-1);
+      }
+      
+      
       
       NDCG_1=DCG_1/IDCG_1;
       NDCG_5=DCG_5/IDCG_5;
@@ -299,7 +320,7 @@ public static void evaluateStdin(
       for(Double i:treeMap.keySet())
       {
     	  
-    	  System.out.println(i+"\t"+P_at.get(i)+"\t"+R_at.get(i));
+    	  System.out.println(i+"\t"+P_at.get(i)+"\t\t"+R_at.get(i));
       }
       
     } catch (Exception e){
