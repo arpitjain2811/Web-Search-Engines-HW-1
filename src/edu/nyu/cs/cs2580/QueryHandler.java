@@ -8,7 +8,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +89,7 @@ class QueryHandler implements HttpHandler {
             if (ranker_type.equals("cosine")){
             	
             	 sds = _ranker.runquery_cosine(query_map.get("query"));
+            	 
 
             } else if (ranker_type.equals("QL")){
 		
