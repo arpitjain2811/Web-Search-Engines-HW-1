@@ -23,7 +23,7 @@ class QueryHandler implements HttpHandler {
 
   private Ranker _ranker;
   public Integer SessionID=0;
-  public Vector<Clicklog> clicklogs;
+  public static Vector<Clicklog> clicklogs=new Vector<>();
 
   public QueryHandler(Ranker ranker){
     _ranker = ranker;
@@ -90,10 +90,14 @@ class QueryHandler implements HttpHandler {
         		if(cl._did==click_did)
         		{
         			cl._action="click";
-        			cl._timeStamp=(java.sql.Date) new Date();
+        			Date dc=new Date();
+        			
+        			cl._timeStamp=dc.toString();
         		}
         		clicklogs.set(i, cl);
         	}
+        	
+
         	
         	
         }
@@ -103,17 +107,18 @@ class QueryHandler implements HttpHandler {
           if (keys.contains("ranker")){
             String ranker_type = query_map.get("ranker");
             
-//            if (SessionID >0){
-//            	FileWriter writer = new FileWriter("hw1.4-log.tsv",true);
-//            	
-//            	for(int i=0;i<clicklogs.size();i++)
-//            	{
-//            		writer.write(clicklogs.get(i).toString());
-//            	}
-//            	writer.close();
-//            	clicklogs.clear();
-//            	
-//            }
+            if (SessionID >0){
+            	FileWriter writer = new FileWriter("../data/output/hw1.4-log.tsv",true);
+            	
+            	for(int i=0;i<clicklogs.size();i++)
+            	{
+            		writer.write(clicklogs.get(i).asString());
+            		writer.write("\n");
+            	}
+            	writer.close();
+            	clicklogs.clear();
+            	
+            }
             
             SessionID++;
             String query=query_map.get("query");
@@ -199,8 +204,16 @@ class QueryHandler implements HttpHandler {
       	while (itr.hasNext()){
             ScoredDocument sd = itr.next();
             
-           clicklogs.add(new Clicklog(SessionID, query_map.get("query"),sd._did,"Render", (java.sql.Date) new Date()));
-            
+            try
+            {
+            Date d= new Date();
+            Clicklog c=new Clicklog(SessionID, query_map.get("query"),sd._did,"render",d.toString());
+            clicklogs.addElement(c);
+            }
+            catch(Exception e) {
+            	System.out.println(e.toString());
+            	
+            }
             queryResponse = queryResponse +"<tr><td>"+Integer.toString(sd._did)+"<br></td><td>"+"<a id=\""+Integer.toString(sd._did)+"\" data-id=\""+Integer.toString(sd._did)+"\" href=\"#\" onclick=\"logclicks(this);\">"+ sd._title+"</a><br></td><td>"+Double.toString(sd._score)+"<br></td></tr>";
           }
           

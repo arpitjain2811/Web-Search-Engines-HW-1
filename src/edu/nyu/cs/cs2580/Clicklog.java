@@ -1,6 +1,8 @@
 package edu.nyu.cs.cs2580;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 // @CS2580: this class should not be changed.
 class Clicklog implements Comparable<Clicklog> {
@@ -8,9 +10,9 @@ class Clicklog implements Comparable<Clicklog> {
   public String _query;
   public int _did;
   public String _action;
-  public Date _timeStamp;
+  public String _timeStamp;
 
-  Clicklog(int sID,String q,int did, String action, Date d){
+  Clicklog(int sID,String q,int did, String action, String d){
 	  _sessionId=sID;
 	  _query=q;
 	  _did = did;
@@ -21,7 +23,7 @@ class Clicklog implements Comparable<Clicklog> {
 
   String asString(){
     return new String(
-    		Integer.toString(_sessionId)+"\t"+_query+"\t"+Integer.toString(_did) + "\t" + _action + "\t" + _timeStamp.toString());
+    		Integer.toString(_sessionId)+"\t"+_query+"\t"+Integer.toString(_did) + "\t" + _action + "\t" + _timeStamp);
   }
 
 @Override
