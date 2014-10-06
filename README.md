@@ -1,6 +1,7 @@
 Web-Search-Engines-HW-1
 =======================
 Homework 1
+
 1. Please run the server linserv1.cims.nyu.edu only.
 
 2. We have attached an HTML front end file which you can run on your browser. You need to be on the NYU network for this as well.
@@ -17,3 +18,9 @@ updated with a (previously run) query only when a brand new query is requested.
 7. We have also provided a script (bash) file in the src folder which calls the server and generates the required output files apart from the Click Logging output.
 
 8. We have also attached a config file of BETA values for the linear model which we read while running the program.
+
+Please feel free to contact us if you have problems running the code or getting the required outputs.
+
+Suraj Swaminathan ss7359@nyu.edu
+Arpit Jain arpit.jain@cs.nyu.edu
+Mark Andrew Ward maw627@nyu.edu
