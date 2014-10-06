@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JUDGEMENTS=../data/qrels.tsv
-OUTPUT=../data/output
+OUTPUT=../results
 
 rm -rf $OUTPUT
 mkdir $OUTPUT
