@@ -108,7 +108,7 @@ class QueryHandler implements HttpHandler {
             String ranker_type = query_map.get("ranker");
             
             if (SessionID >0){
-            	FileWriter writer = new FileWriter("../results/output/hw1.4-log.tsv",true);
+            	FileWriter writer = new FileWriter("../results/hw1.4-log.tsv",true);
             	
             	for(int i=0;i<clicklogs.size();i++)
             	{
