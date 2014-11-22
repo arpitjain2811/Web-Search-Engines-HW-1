@@ -20,7 +20,6 @@ class ScoredDocument implements Comparable<ScoredDocument> {
 @Override
 public int compareTo(ScoredDocument o) {
 	
-	// TODO Auto-generated method stub
 	return Double.compare(o._score,this._score);
 }
 }
